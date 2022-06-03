@@ -9,12 +9,22 @@ import javax.persistence.Id;
 
 @Entity
 public class Game {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	private String name;
+
+	private String genre;
+
+	private String rating;
+
+	private double price;
+
+	private String console;
+
+	private String multiplayer;
 
 	public Game() {
 		super();
@@ -36,6 +46,46 @@ public class Game {
 		this.name = name;
 	}
 
+	public String getGenre() {
+		return genre;
+	}
+
+	public void setGenre(String genre) {
+		this.genre = genre;
+	}
+
+	public String getRating() {
+		return rating;
+	}
+
+	public void setRating(String rating) {
+		this.rating = rating;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public String getConsole() {
+		return console;
+	}
+
+	public void setConsole(String console) {
+		this.console = console;
+	}
+
+	public String getMultiplayer() {
+		return multiplayer;
+	}
+
+	public void setMultiplayer(String multiplayer) {
+		this.multiplayer = multiplayer;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -55,9 +105,8 @@ public class Game {
 
 	@Override
 	public String toString() {
-		return "Game [id=" + id + ", name=" + name + "]";
+		return "Game [id=" + id + ", name=" + name + ", genre=" + genre + ", rating=" + rating + ", price=" + price
+				+ ", console=" + console + ", multiplayer=" + multiplayer + "]";
 	}
-	
-	
 
 }
