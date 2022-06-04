@@ -45,8 +45,14 @@ public class GameContoller {
 	}
 	
 	@DeleteMapping("games/delete/{id}")
-	public void deleteGame(@RequestBody Game game, @PathVariable int id) {
-		gameserv.deleteGame(game, id);
+	public void deleteGame(@PathVariable int id, HttpServletResponse res) {
+		try {
+			gameserv.deleteGame(id);
+			res.setStatus(204);
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.setStatus(400);
+		}
 	}
 	
 	@PutMapping("games/{id}")

@@ -26,10 +26,16 @@ public class GameServiceImpl implements GameService {
 	}
 
 	@Override
-	public void deleteGame(Game game, int id) {
-//		Optional<Game> op = gamerepo.findById(id);
+	public boolean deleteGame(int id) {
+		boolean deleted = false;
+		Optional<Game> op = gamerepo.findById(id);
+		if(op.isPresent()) {
+			
+				gamerepo.deleteById(id);
+				deleted = true;
+		}
+		return deleted;
 		
-		gamerepo.deleteById(id);
 	}
 
 	@Override
