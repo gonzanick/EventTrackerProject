@@ -26,9 +26,10 @@
 * Atom
 * Git/Github
 * SQL Workbench
+* XHR
 
 
 ## Lessons Learned
 
 * Simple assignment but helped better understand repositories
-* Better understanding with Postman and how we can test code using Postman 
+* Better understanding with Postman and how we can test code using Postman
