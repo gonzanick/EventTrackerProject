@@ -23,20 +23,20 @@ function loadGamesList() {
 				
 			}
 		}
-	}
+	};
 	xhr.send();
 }
 
 function displayGamesList(games) {
 	let tbody = document.getElementById('gameRows');
-	for(let games of gamesList) {
+	for(let game of games) {
 		let tr = document.createElement('tr');
 		tbody.appendChild(tr);
 		let td = document.createElement('td');
-		td.textContent = games.id;
+		td.textContent = game.id;
 		tr.appendChild(td);
 		td = document.createElement('td');
-		td.textContent = games.title;
+		td.textContent = game.name;
 		tr.appendChild(td);
 	}
 }
