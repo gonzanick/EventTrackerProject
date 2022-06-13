@@ -8,6 +8,9 @@ function init() {
 	console.log('In init()');
 	loadGamesList();
 	document.newGameForm.addGameButton.addEventListener('click', createGame);
+	document.updateGameForm.updateGameButton.addEventListener('click', updateGame);
+	document.deleteGameForm.deleteGameButton.addEventListener('click', deleteGame);
+	console.trace();
 }
 
 function createGame(evt) {
@@ -91,8 +94,20 @@ function displayGames(games) {
 	}
 }
 
+function updateGame(evt) {
+	evt.preventDefault();
+	let form = document.updateGameForm;
+	let updateGame = {
+		name: form.name.value,
+		genre: form.genre.value,
+		rating: form.rating.value,
+		console: form.console.value,
+		multiplayer: form.multiplayer.value
+	};
+	sendUpdateGame(updateGame);
+}
 
-function updateGame(games) {
+function sendUpdateGame(updateGame) {
 	let xhr = new XMLHttpRequest();
 	xhr.open("PUT", "api/games/${id}")
 	xhr.onreadystatechange = function() {
@@ -107,5 +122,25 @@ function updateGame(games) {
 			}
 		}
 	};
+	xhr.send(updateGame);
+}
+
+function deleteGame() {
+	let xhr = new XMLHttpRequest();
+	let id = target.parent.getId();
+	xhr.open("DELETE", "api/games/delete/${id}")
+	xhr.onreadystatechange = function() {
+		if(xhr.readyState === 4) {
+			if(xhr.status === 200 || xhr.status === 204) {
+				let games = JSON.parse(xhr.responseText);
+				loadGamesList();
+				
+			}
+			else{
+				
+			}
+		}
+	};
 	xhr.send();
+	
 }

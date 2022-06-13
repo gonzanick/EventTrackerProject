@@ -10,13 +10,13 @@
 ## URL
 
 * View all Games: GET
-  http://localhost:8083/api/games
+  http://localhost:8084/api/games
 * Create Game: POST
-  http://localhost:8083/api/games/create
+  http://localhost:8084/api/games/create
 * Update Game: PUT
-  http://localhost:8083/api/games/{id}
+  http://localhost:8084/api/games/{id}
 * Delete Game: DELETE  
-  http://localhost:8083/api/games/delete/{id}
+  http://localhost:8084/api/games/delete/{id}
 
 
 ## Technologies Used
