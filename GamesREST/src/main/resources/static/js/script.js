@@ -7,10 +7,11 @@ window.addEventListener('load', function(evt){
 function init() {
 	console.log('In init()');
 	loadGamesList();
+	document.newGameForm.addGameButton.addEventListener('click', createGame);
 }
 
-function createFilm(e) {
-	e.preventDefault();
+function createGame(evt) {
+	evt.preventDefault();
 	let form = document.newGameForm;
 	let newGame = {
 		name: form.name.value,
@@ -19,17 +20,19 @@ function createFilm(e) {
 		console: form.console.value,
 		multiplayer: form.multiplayer.value
 	};
-	sendNewFilm(newGame);
+	sendNewGame(newGame);
 }
 
 
 function sendNewGame(newGame) {
+	console.log('sendNewGame');
 	let xhr = new XMLHttpRequest();
 	xhr.open('POST', `api/games/create`);
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === 4) {
 			if (xhr.status === 200 || xhr.status === 201) {
 				let game = JSON.parse(xhr.responseText);
+				console.log(game);
 				displayGames(game);
 			}
 			else {
@@ -86,4 +89,23 @@ function displayGames(games) {
 		td.textContent = game.multiplayer;
 		tr.appendChild(td);
 	}
+}
+
+
+function updateGame(games) {
+	let xhr = new XMLHttpRequest();
+	xhr.open("PUT", "api/games/${id}")
+	xhr.onreadystatechange = function() {
+		if(xhr.readyState === 4) {
+			if(xhr.status === 200) {
+				let games = JSON.parse(xhr.responseText);
+				displayGames(games);
+				
+			}
+			else{
+				
+			}
+		}
+	};
+	xhr.send();
 }
