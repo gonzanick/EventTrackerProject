@@ -70,6 +70,7 @@ function loadGamesList() {
 }
 
 function displayGames(games) {
+	let gameRatingCount = 0;
 	let tbody = document.getElementById('gameRows');
 	while(tbody.firstElementChild){
 		tbody.removeChild(tbody.firstElementChild);
@@ -95,7 +96,12 @@ function displayGames(games) {
 		td = document.createElement('td');
 		td.textContent = game.multiplayer;
 		tr.appendChild(td);
+		if(game.rating === "M") {
+			gameRatingCount += 1;
+		}
 	}
+	let m = document.getElementById('gameRatingCount');
+	m.textContent = gameRatingCount;
 }
 
 function updateGame(evt) {
