@@ -9,7 +9,7 @@ function init() {
 	loadGamesList();
 	document.newGameForm.addGameButton.addEventListener('click', createGame);
 	document.updateGameForm.updateGameButton.addEventListener('click', updateGame);
-	document.deleteGameForm.deleteGameButton.addEventListener('click', deleteGame);
+	document.deleteGameForm.deleteButton.addEventListener('click', deleteGame);
 	console.trace();
 }
 
@@ -24,6 +24,7 @@ function createGame(evt) {
 		multiplayer: form.multiplayer.value
 	};
 	sendNewGame(newGame);
+	
 }
 
 
@@ -36,7 +37,7 @@ function sendNewGame(newGame) {
 			if (xhr.status === 200 || xhr.status === 201) {
 				let game = JSON.parse(xhr.responseText);
 				console.log(game);
-				displayGames(game);
+				loadGamesList();
 			}
 			else {
 				displayError('Error creating game: ' + xhr.status + " " + xhr.statusText);
@@ -70,6 +71,9 @@ function loadGamesList() {
 
 function displayGames(games) {
 	let tbody = document.getElementById('gameRows');
+	while(tbody.firstElementChild){
+		tbody.removeChild(tbody.firstElementChild);
+	}
 	for(let game of games) {
 		let tr = document.createElement('tr');
 		tbody.appendChild(tr);
@@ -98,6 +102,7 @@ function updateGame(evt) {
 	evt.preventDefault();
 	let form = document.updateGameForm;
 	let updateGame = {
+		id: form.id.value,
 		name: form.name.value,
 		genre: form.genre.value,
 		rating: form.rating.value,
@@ -107,32 +112,35 @@ function updateGame(evt) {
 	sendUpdateGame(updateGame);
 }
 
-function sendUpdateGame(updateGame) {
+function sendUpdateGame(games) {
 	let xhr = new XMLHttpRequest();
-	xhr.open("PUT", "api/games/${id}")
+	xhr.open("PATCH", "api/games/" + games.id);
 	xhr.onreadystatechange = function() {
 		if(xhr.readyState === 4) {
 			if(xhr.status === 200) {
-				let games = JSON.parse(xhr.responseText);
-				displayGames(games);
+				//let games = JSON.parse(xhr.responseText);
 				
+				loadGamesList();
 			}
 			else{
 				
 			}
 		}
 	};
-	xhr.send(updateGame);
+	console.log(games);
+	xhr.setRequestHeader('Content-type', 'application/json');
+	xhr.send(JSON.stringify(games));
+	
 }
 
 function deleteGame() {
 	let xhr = new XMLHttpRequest();
-	let id = target.parent.getId();
-	xhr.open("DELETE", "api/games/delete/${id}")
+	let id = document.deleteGameForm.id.value;
+	xhr.open("DELETE", "api/games/delete/" + id);
 	xhr.onreadystatechange = function() {
 		if(xhr.readyState === 4) {
 			if(xhr.status === 200 || xhr.status === 204) {
-				let games = JSON.parse(xhr.responseText);
+				
 				loadGamesList();
 				
 			}
