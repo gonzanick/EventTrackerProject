@@ -9,7 +9,8 @@ import { Game } from '../models/game';
 })
 export class VideoGamesService {
 
-  private url = environment.baseUrl + 'api/games';
+  private url = environment.baseUrl + 'api/games/';
+  headers = { headers: new Headers({"Content-Type": "application/json"})};
 
 
   constructor(
@@ -31,13 +32,14 @@ export class VideoGamesService {
   }
 
   destroy(id: number): Observable<void> {
-    return this.http.delete<void>(this.url + '/' + id).pipe(
+
+    return this.http.delete<void>(this.url + 'delete/' + id).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError(
           () =>
             new Error(
-              'TodoService.delete(): error delete todo: ' + err
+              'GamesService.delete(): error delete game: ' + err
             )
         );
       })
@@ -45,19 +47,41 @@ export class VideoGamesService {
   }
 
   create(game: Game): Observable<Game>{
-    game.name = '';
-    game.genre = '';
-    game.rating = '';
-    game.price = 0;
-    game.console = '';
-    game.multiplayer = '';
-    return this.http.post<Game>(this.url, game);
+    // game.name = '';
+    // game.genre = '';
+    // game.rating = '';
+    // game.price = 0;
+    // game.console = '';
+    // game.multiplayer = '';
+    return this.http.post<Game>(this.url+ 'create', game).pipe(
+      catchError((err: any) => {
+        console.log(err);
+        return throwError(
+          () =>
+            new Error(
+              'VideoGamesService.create(): error creating games: ' + err
+            )
+        );
+      })
+    );
   }
 
-  update(todo: Game): Observable<Game> {
+  update(game: Game): Observable<Game> {
 
-    return this.http.put<Game>(this.url + "/" + Game.id, Game);
+    return this.http.put<Game>(this.url + game.id, game).pipe(
+      catchError((err: any) => {
+        console.log(err);
+        return throwError(
+          () =>
+            new Error(
+              'VideoGamesService.update(): error updating games: ' + err
+            )
+        );
+      })
+    );;
   }
+
+
 
 
 }

@@ -4,17 +4,17 @@ export class Game {
   name: string | null;
   genre: string | null;
   rating: string | null;
-  price: number | null;
+  price: number;
   console: string | null;
   multiplayer: string | null;
-  static id: string;
+
 
 constructor(
   id: number = 0,
   name: string | null = '',
   genre: string | null = '',
   rating: string | null = '',
-  price: number | null = 0,
+  price: number = 0,
   console: string | null = '',
   multiplayer: string | null = ''
 ) {

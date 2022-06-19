@@ -11,8 +11,9 @@ export class HomeComponent implements OnInit {
 
   game: Game[] = [];
 
+
   selected: Game | null = null;
-  newGame: Game | null = new Game ();
+  newGame: Game = new Game ();
   editGame: Game | null = null;
 
 
@@ -47,7 +48,7 @@ export class HomeComponent implements OnInit {
         this.reload();
       },
       error: (kill) => {
-        console.error('TodoListComonent: error on kill')
+        console.error('VideoGameComonent: error on kill')
         console.error(kill);
       }
     });
@@ -57,8 +58,8 @@ export class HomeComponent implements OnInit {
   addGame(game: Game) {
     this.gameSvc.create(game).subscribe({
       next: (todos)=>{
-        this.reload();
         this.newGame= new Game();
+        this.reload();
       },
       error: (fail)=>{
         console.error('ERROR in creating a Game');
@@ -68,23 +69,36 @@ export class HomeComponent implements OnInit {
 
   }
 
-  setEditGame(): void {
+  setEditGame(game: Game): void {
     this.editGame = Object.assign({}, this.selected);
   }
 
-  updateTodo(game: Game): void {
+  updateGame(game: Game): void {
+    console.log(game);
     this.gameSvc.update(game).subscribe({
       next: (updated) =>{
         this.reload();
-        this.editGame = null;
+        this.editGame = new Game();
       },
       error: (fail) => {
-        console.error('TodoListComponent: error on update');
+        console.error('VideoGameComponent: error on update');
         console.error(fail);
       }
     });
 
 
+  }
+
+  displayTable() {
+    this.selected = null;
+  }
+
+  getTotalPrice(): number {
+    let totalPrice = 0;
+    this.game.forEach((g) => {
+      totalPrice += g.price;
+    });
+    return totalPrice;
   }
 
 }

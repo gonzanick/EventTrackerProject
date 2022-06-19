@@ -25,25 +25,35 @@
         <td>{{ game.multiplayer }}</td>
         <td> <button class="btn btn-danger" (click)="deleteGame(game.id)">X</button> </td>
       </tr>
+      <tr>Total Cost of all Video Games: ${{getTotalPrice() | number: "1.2"}}</tr>
     </tbody>
   </table>
-  <form name="newTask" *ngIf="newGame" class="row g-2">
-    <input class="col form-control" type="text" name="task" [(ngModel)]="newGame.name" />
+  <form name="newGame"  class="row g-2">
+    <!-- *ngIf="newGame" -->
+    <input class="col form-control" type="text" name="name" [(ngModel)]="newGame.name" placeholder="Game Ttile" /><br>
+    <input class="col form-control" type="text" name="genre" [(ngModel)]="newGame.genre" placeholder="Genre"/><br>
+    <input class="col form-control" type="text" name="rating" [(ngModel)]="newGame.rating" placeholder="Rating"/><br>
+    <input class="col form-control" type="text" name="price" [(ngModel)]="newGame.price" placeholder="Price"/><br>
+    <input class="col form-control" type="text" name="console" [(ngModel)]="newGame.console" placeholder="Console" /><br>
+    <input class="col form-control" type="text" name="multiplayer" [(ngModel)]="newGame.multiplayer" placeholder="Multiplayer Y/N" /><br>
     <button class="col btn btn-primary" (click)="addGame(newGame)">Add a new Video Game</button>
   </form>
 </div>
 
-<div id="todoDetails" *ngIf="selected && ! editGame">
-  <h4>{{ selected.id }}</h4>
+<div id="gameEdit" *ngIf="selected && ! editGame">
   <h3>{{ selected.name }}</h3>
   <p>{{ selected.genre}}</p>
+  <p>{{ selected.rating}}</p>
+  <p>{{ selected.price}}</p>
+  <p>{{ selected.console}}</p>
+  <p>{{ selected.multiplayer}}</p>
 
-  <!-- <p>{{ selected.complete ? 'Complete'  : 'Incomplete'}}</p> -->
-  <!-- <button class="btn btn-outline-danger" (click)="displayTable()">Back</button>
-  <button class="btn btn-outline-primary" (click)="setEditTodo()">Edit</button> -->
+  <p>{{ selected.name ? 'Complete'  : 'Incomplete'}}</p>
+  <button class="btn btn-outline-danger" (click)="displayTable()">Back</button>
+  <button class="btn btn-outline-primary" (click)="setEditGame(selected)">Edit</button>
 </div>
 
-<div id="todoEdit" *ngIf="editGame">
+<div id="gameEdit" *ngIf="editGame">
   <form class="form">
     <label class="form-label" for="name">Name</label>
     <input class="form-control" type="text" name="name" [(ngModel)]="editGame.name" /> <br />
@@ -53,7 +63,16 @@
     <label class="form-label" for="rating">Rating</label>
     <input class="form-control" type="text" name="rating" [(ngModel)]="editGame.rating" />
     <br />
+    <label class="form-label" for="price">Price</label>
+    <input class="form-control" type="text" name="price" [(ngModel)]="editGame.price" />
+    <br />
+    <label class="form-label" for="console">Console</label>
+    <input class="form-control" type="text" name="console" [(ngModel)]="editGame.console" />
+    <br />
+    <label class="form-label" for="multiplayer">Multiplayer</label>
+    <input class="form-control" type="text" name="multiplayer" [(ngModel)]="editGame.multiplayer" />
+    <br />
     <button class="btn btn-danger" (click)="editGame = null">Cancel</button>
-    <button class="btn btn-primary" (click)="updateTodo(editGame)">Save</button>
+    <button class="btn btn-primary" (click)="updateGame(editGame)">Save</button>
   </form>
 </div>
